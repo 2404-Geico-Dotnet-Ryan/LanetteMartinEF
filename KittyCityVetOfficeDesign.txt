@@ -1,0 +1,100 @@
+Kity City Vet Office System
+
+User Types:
+•	Vet Employee 
+•	Pet Owner 
+
+Actions Each User Type Can Perform:
+•	Vet Employee 
+o	AddParentPet
+	Will allow a Vet Employee to add a new Parent and their Pet to the database
+
+o	UpdatePet
+	Will allow a Vet Employee to update a pet already in the database
+
+o	ViewPetRecords
+	Will display information for all visits pet has made to the office  
+
+o	CloseOutPet 
+	Will allow a Vet Employee to update the Pets records with a death date
+
+•	Pet Owner 
+o	ViewPetRecords
+	Will display summary of information from all visits made for Parent’s Pets
+
+o	RequestCallBack
+	Will ask for Parent Name, Pet name and Call Back Number and write to a log. 
+
+Classes
+•	Main
+o	Runs program control 
+
+•	Pet 
+o	Details a Pet 
+
+•	Person 
+o	Details things ALL People who use the system have in common
+
+
+Database Tables 
+
+•	Person
+o	PersonId – PK
+o	PersonType – “1” – Employee, “2” – Pet Parent
+o	FirstName
+o	LastName
+o	PhoneNum
+o	JobTitle
+o	UserName
+o	UserPassword
+o	AccessLevel – “1” – Update, “2” – Read Only
+
+
+•	Pet 
+o	PetIdNum – PK, FK
+o	PersonId - FK
+o	Name
+o	Color
+o	FurType
+o	Gender
+o	Weight
+o	Age
+o	InsidePet
+o	AppointmentDate
+o	SeenBy
+o	RainbowBridgeDate
+
+
+
+System Home Screen
+----------------------------------------
+- Welcome to the Kitty City Vet Office -
+-          Pet Records System          -
+-      Who is using system today?      -
+----------------------------------------
+Type '1' if you are Vet Staff
+Type '2' if you are a Pet Parent
+
+
+
+Vet Staff Screen
+-------------------------------------
+- Welcome to the Pet Records System -
+-        Vet Staff Options          -
+-------------------------------------
+Type '1' To Set up a New Pet Record
+Type '2' To Update a Pet Record
+Type '3' To View a Pet Record
+Type '4' To Close Out a Pet Record
+Type '5' Exit system
+
+
+
+Pet Parent Screen
+-------------------------------------
+- Welcome to the Pet Records System -
+-        Pet Parent Options         -
+-------------------------------------
+Type '1' To View a Pet Record
+Type '2' To Request Call Back
+Type '3' Exit system
