@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KittyCityVet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240531121041_InitialCreate")]
+    [Migration("20240531170751_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -104,6 +104,8 @@ namespace KittyCityVet.Migrations
 
                     b.HasKey("PetId");
 
+                    b.HasIndex("PersonId");
+
                     b.ToTable("Pets");
                 });
 
@@ -138,7 +140,41 @@ namespace KittyCityVet.Migrations
 
                     b.HasKey("VisitId");
 
+                    b.HasIndex("PetId");
+
                     b.ToTable("Visits");
+                });
+
+            modelBuilder.Entity("Pet", b =>
+                {
+                    b.HasOne("Person", "Person")
+                        .WithMany("Pets")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Visit", b =>
+                {
+                    b.HasOne("Pet", "Pet")
+                        .WithMany("Visits")
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
+                });
+
+            modelBuilder.Entity("Person", b =>
+                {
+                    b.Navigation("Pets");
+                });
+
+            modelBuilder.Entity("Pet", b =>
+                {
+                    b.Navigation("Visits");
                 });
 #pragma warning restore 612, 618
         }

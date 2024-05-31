@@ -10,6 +10,10 @@ public class Visit
     public DateTime AppointmentDate{ get; set; }
     public string? SeenBy { get; set; } /* This will be the Vet Employee making new record/updates Title + Name */
    
+    // This establishes a "one a one" relationship 
+    // One Pet PER one Visit 
+    public Pet Pet { get; set; }
+
     /* NO Argurments Constructor*/
     public Visit()
     {

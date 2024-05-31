@@ -14,6 +14,14 @@ public class Pet
     public string? SeenBy { get; set; } /* This will be the Vet Employee making new record/updates Title + Name */
     public string? RainbowBridgeDate{ get; set; } 
    
+    // This establishes the "one a one" relationship 
+    // One Pet to one Person(Owner) 
+    public Person Person { get; set; } 
+
+    // This establishes the "one to many" relationship 
+    // One Pet to Many Visits 
+    public ICollection<Visit> Visits { get; set; }
+
     /* NO Argurments Constructor*/
     public Pet()
     {

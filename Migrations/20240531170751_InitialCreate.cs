@@ -52,6 +52,12 @@ namespace KittyCityVet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.PetId);
+                    table.ForeignKey(
+                        name: "FK_Pets_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,20 +77,36 @@ namespace KittyCityVet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Visits", x => x.VisitId);
+                    table.ForeignKey(
+                        name: "FK_Visits_Pets_PetId",
+                        column: x => x.PetId,
+                        principalTable: "Pets",
+                        principalColumn: "PetId",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_PersonId",
+                table: "Pets",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_PetId",
+                table: "Visits",
+                column: "PetId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "Visits");
 
             migrationBuilder.DropTable(
                 name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "Visits");
+                name: "Persons");
         }
     }
 }

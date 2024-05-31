@@ -2,9 +2,12 @@ using System.Formats.Tar;
 using Microsoft.EntityFrameworkCore;
 class AppDbContext : DbContext
 {
+    // We provide the models through the DbSet<'modle name'> fields
     public DbSet<Person> Persons { get; set; }
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Visit> Visits { get; set; }
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         /* Read in connection string */ 
@@ -13,18 +16,26 @@ class AppDbContext : DbContext
         optionsBuilder.UseSqlServer(connectionString); 
     }
 
+    // We have to override the default behavior to ensure the foreign key constraint is established.
+    // If we do not do this then the columns will still be create but the constraints will not be enforced
+
+    /*********************/
+    /* need to redo this now that I have good example of setting up forgien keys! :) 
+    /*********************/
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        /* Setting for Person table */
+        /* Settings for Person table */
+        /* As a one to many "1 Person to Many Pets" relationship with Pets table */
         modelBuilder.Entity<Person>()
-        .HasKey(pr => pr.PersonId);
-    
-        /* Setting for Pet table */
-        modelBuilder.Entity<Pet>()
-        .HasKey(p=> p.PetId); 
+        .HasMany(pr => pr.Pets)
+        .WithOne(pt => pt.Person)
+        .HasForeignKey(pt => pt.PersonId);
 
-        /* Setting for Visit table */
-        modelBuilder.Entity<Visit>()
-        .HasKey(v=> v.VisitId); 
-    }
+        /* Settings for Pet table */
+        /* As a one to many "1 Pet to Many Visits" relationship with Visits table */
+        modelBuilder.Entity<Pet>()
+        .HasMany(pt => pt.Visits)
+        .WithOne(vt => vt.Pet)
+        .HasForeignKey(vt => vt.PetId);
+    } 
 }
