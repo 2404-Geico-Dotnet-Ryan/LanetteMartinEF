@@ -10,8 +10,6 @@ public class Person
     public string? UserPassword { get; set; }
     public int AccessLevel { get; set; }  /* 1 - Update  2 - ReadOnly */
 
-    public ICollection<Pet> Pets { get; set; }
-
     /* NO Argurments Constructor*/
     public Person()
     {

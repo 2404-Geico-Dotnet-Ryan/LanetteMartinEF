@@ -2,6 +2,7 @@ public class Pet
 {
     //Class Fields
     public int PetId { get; set; }
+    public int PersonId { get; set; } /* This will the Pet Parents Person ID */
     public string? PetName { get; set; }
     public string? Color{ get; set; }
     public string? FurType{ get; set; }
@@ -12,10 +13,7 @@ public class Pet
     public DateTime AppointmentDate{ get; set; }
     public string? SeenBy { get; set; } /* This will be the Vet Employee making new record/updates Title + Name */
     public string? RainbowBridgeDate{ get; set; } 
-    public int PersonId { get; set; } /* This will the Pet Parents Person ID */
-    public  Person Person { get; set; }
-    public  Visit Visit { get; set; }
-
+   
     /* NO Argurments Constructor*/
     public Pet()
     {

@@ -35,7 +35,9 @@ namespace KittyCityVet.Migrations
                 name: "Pets",
                 columns: table => new
                 {
-                    PetId = table.Column<int>(type: "int", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
                     PetName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FurType = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -45,18 +47,11 @@ namespace KittyCityVet.Migrations
                     InSidePet = table.Column<bool>(type: "bit", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SeenBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RainbowBridgeDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
+                    RainbowBridgeDate = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.PetId);
-                    table.ForeignKey(
-                        name: "FK_Pets_Persons_PetId",
-                        column: x => x.PetId,
-                        principalTable: "Persons",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,32 +71,20 @@ namespace KittyCityVet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Visits", x => x.VisitId);
-                    table.ForeignKey(
-                        name: "FK_Visits_Pets_PetId",
-                        column: x => x.PetId,
-                        principalTable: "Pets",
-                        principalColumn: "PetId",
-                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Visits_PetId",
-                table: "Visits",
-                column: "PetId",
-                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Visits");
+                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "Visits");
         }
     }
 }

@@ -17,10 +17,7 @@ class AppDbContext : DbContext
     {
         /* Setting for Person table */
         modelBuilder.Entity<Person>()
-        .HasMany(pr => pr.Pets)
-        .WithOne(pt => pt.Person)
-        .HasForeignKey(pt => pt.PetId)
-        .HasPrincipalKey(pr => pr.PersonId);
+        .HasKey(pr => pr.PersonId);
     
         /* Setting for Pet table */
         modelBuilder.Entity<Pet>()

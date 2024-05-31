@@ -38,7 +38,9 @@ class PersonServices
 
         /* If pass both check add the new user */
         pr.AddPerson(p);
-        return LookUpPetParent(p.PhoneNum);
+        pr.Save();
+        Person newlyAdded = LookUpPetParent(p.PhoneNum);
+        return newlyAdded;
     }
     
     /***********************************************/

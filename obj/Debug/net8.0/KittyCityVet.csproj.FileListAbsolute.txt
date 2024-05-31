@@ -195,3 +195,4 @@ C:\Users\U59A24\source\classrepos\LanetteMartinEF\obj\Debug\net8.0\refint\KittyC
 C:\Users\U59A24\source\classrepos\LanetteMartinEF\obj\Debug\net8.0\KittyCityVet.pdb
 C:\Users\U59A24\source\classrepos\LanetteMartinEF\obj\Debug\net8.0\KittyCityVet.genruntimeconfig.cache
 C:\Users\U59A24\source\classrepos\LanetteMartinEF\obj\Debug\net8.0\ref\KittyCityVet.dll
+C:\Users\U59A24\source\classrepos\LanetteMartinEF\obj\Debug\net8.0\KittyCityVet.sourcelink.json

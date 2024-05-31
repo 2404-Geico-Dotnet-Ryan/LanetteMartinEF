@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KittyCityVet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240530221058_InitialCreate")]
+    [Migration("20240531121041_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -64,7 +64,10 @@ namespace KittyCityVet.Migrations
             modelBuilder.Entity("Pet", b =>
                 {
                     b.Property<int>("PetId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PetId"));
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -135,41 +138,7 @@ namespace KittyCityVet.Migrations
 
                     b.HasKey("VisitId");
 
-                    b.HasIndex("PetId")
-                        .IsUnique();
-
                     b.ToTable("Visits");
-                });
-
-            modelBuilder.Entity("Pet", b =>
-                {
-                    b.HasOne("Person", "Person")
-                        .WithMany("Pets")
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("Visit", b =>
-                {
-                    b.HasOne("Pet", null)
-                        .WithOne("Visit")
-                        .HasForeignKey("Visit", "PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Person", b =>
-                {
-                    b.Navigation("Pets");
-                });
-
-            modelBuilder.Entity("Pet", b =>
-                {
-                    b.Navigation("Visit")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
