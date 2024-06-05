@@ -4,7 +4,7 @@ class PersonServices
     Services Performed :
         - Add a New Person (Pet Parents only at this time)
         - Look Up a Pet Parent by Phone Number 
-        - Login a User 
+        - Look Up a Pet Parent by PersonId
         - Get a list of All Person in the system
 
     */
@@ -24,19 +24,6 @@ class PersonServices
     /***********************************************/
     public Person? AddNewPerson(Person p)
     {
-         /*Will not let you register a new person if the UserName is already in use */
-        List<Person> allPersons = pr.GetAllPersons();
-
-        foreach (Person person in allPersons)
-        {
-            if (person.UserName == p.UserName)
-            {
-                Console.WriteLine("User Name is already taken");
-                return null; 
-            }
-        }      
-
-        /* If pass both check add the new user */
         pr.AddPerson(p);
         pr.Save();
         Person newlyAdded = LookUpPetParent(p.PhoneNum);
@@ -65,36 +52,14 @@ class PersonServices
     }
 
     /***********************************************/
-    /* Method Name - LoginUser                     */
-    /* Inputs      - User Name and Password        */
-    /* Returns     - Person Object found           */
+    /* Method Name - GetPerson                     */
+    /* Inputs      - PersonId                      */
+    /* Returns     - Located Person                */
     /***********************************************/
-    public Person? LoginUser(string userName, string userPassword)
+    public Person? GetPerson(int id)
     {
-        /* Look thru all users for a match to UserName and Password*/ 
-        List<Person> allPersons = pr.GetAllPersons();
-
-        foreach (Person person in allPersons)
-        {
-            if (person.UserName == userName)
-            {
-                if (person.UserPassword == userPassword)
-                {
-                    return person;
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Password was invalid");
-                    return null; 
-                }
-            }
-        }  
-
-        /* If loop found no match means we never found a match */
-        Console.WriteLine();
-        Console.WriteLine("Person was not found in the system");
-        return null; 
+        Person getPerson = pr.GetPerson(id);
+        return getPerson; 
     }
 
     /***********************************************/

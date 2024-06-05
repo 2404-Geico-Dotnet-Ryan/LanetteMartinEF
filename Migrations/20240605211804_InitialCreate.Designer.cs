@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KittyCityVet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240531170751_InitialCreate")]
+    [Migration("20240605211804_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,34 @@ namespace KittyCityVet.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Login", b =>
+                {
+                    b.Property<int>("LoginId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoginId"));
+
+                    b.Property<int>("AccessLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LoginId");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Logins");
+                });
+
             modelBuilder.Entity("Person", b =>
                 {
                     b.Property<int>("PersonId")
@@ -31,9 +59,6 @@ namespace KittyCityVet.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonId"));
-
-                    b.Property<int>("AccessLevel")
-                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -48,12 +73,6 @@ namespace KittyCityVet.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNum")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserPassword")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PersonId");
@@ -145,6 +164,17 @@ namespace KittyCityVet.Migrations
                     b.ToTable("Visits");
                 });
 
+            modelBuilder.Entity("Login", b =>
+                {
+                    b.HasOne("Person", "Person")
+                        .WithOne("Login")
+                        .HasForeignKey("Login", "PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
             modelBuilder.Entity("Pet", b =>
                 {
                     b.HasOne("Person", "Person")
@@ -169,6 +199,9 @@ namespace KittyCityVet.Migrations
 
             modelBuilder.Entity("Person", b =>
                 {
+                    b.Navigation("Login")
+                        .IsRequired();
+
                     b.Navigation("Pets");
                 });
 

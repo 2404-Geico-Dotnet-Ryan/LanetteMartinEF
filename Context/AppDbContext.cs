@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 class AppDbContext : DbContext
 {
     // We provide the models through the DbSet<'modle name'> fields
+    public DbSet<Login> Logins { get; set; }
     public DbSet<Person> Persons { get; set; }
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Visit> Visits { get; set; }
@@ -19,11 +20,15 @@ class AppDbContext : DbContext
     // We have to override the default behavior to ensure the foreign key constraint is established.
     // If we do not do this then the columns will still be create but the constraints will not be enforced
 
-    /*********************/
-    /* need to redo this now that I have good example of setting up forgien keys! :) 
-    /*********************/
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        /* Settings for Person table */
+        /* As a one to one "1 Person to 1 Login" relationship with Login table */
+        modelBuilder.Entity<Person>()
+        .HasOne(lg => lg.Login)
+        .WithOne(pr => pr.Person)
+        .HasForeignKey<Login>(lg => lg.PersonId);
+        
         /* Settings for Person table */
         /* As a one to many "1 Person to Many Pets" relationship with Pets table */
         modelBuilder.Entity<Person>()
